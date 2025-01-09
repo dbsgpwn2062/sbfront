@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: sushijin/frontend:10.13
+        image: dbsgpwn2062/soundocean-front:1.0
         ports:
         - containerPort: 8000
         env:
