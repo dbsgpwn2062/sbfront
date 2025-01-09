@@ -1,0 +1,39 @@
+name: Trigger Tekton Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  trigger-tekton:
+    runs-on: ubuntu-latest  # GitHub 호스트 Runner
+    steps:
+      - name: Trigger Tekton Pipeline
+        run: |
+          curl -X POST https://relevant-tiger-pleasing.ngrok-free.app/apis/tekton.dev/v1beta1/namespaces/default/pipelineruns \
+          -H "Content-Type: application/json" \
+          -d '{
+                "apiVersion": "tekton.dev/v1beta1",
+                "kind": "PipelineRun",
+                "metadata": {
+                  "generateName": "github-triggered-pipeline-"
+                },
+                "spec": {
+                  "pipelineRef": {
+                    "name": "frontend-pipeline"
+                  },
+                  "params": [
+                    {"name": "git-url", "value": "https://github.com/dbsgpwn2062/sbfront.git"},
+                    {"name": "git-revision", "value": "main"}
+                  ],
+                  "workspaces": [
+                    {
+                      "name": "shared-workspace",
+                      "persistentVolumeClaim": {
+                        "claimName": "task-pv-claim-front"
+                      }
+                    }
+                  ]
+                }
+              }'
