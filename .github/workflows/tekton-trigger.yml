@@ -7,7 +7,7 @@ on:
 
 jobs:
   trigger-tekton:
-    runs-on: ubuntu-latest  # GitHub 호스트 Runner
+    runs-on: ubuntu-latest
     steps:
       - name: Trigger Tekton Pipeline
         run: |
@@ -25,7 +25,8 @@ jobs:
                   },
                   "params": [
                     {"name": "git-url", "value": "https://github.com/dbsgpwn2062/sbfront.git"},
-                    {"name": "git-revision", "value": "main"}
+                    {"name": "git-revision", "value": "main"},
+                    {"name": "docker-image", "value": "dbsgpwn2062/soundocean-front:1.0"}
                   ],
                   "workspaces": [
                     {
